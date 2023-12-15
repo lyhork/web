@@ -1,0 +1,18 @@
+.container-home-section {
+    width: 100dvw;
+    height: 100dvh;
+    overflow: auto;
+
+    .home-header {
+        width: 100%;
+        height: 180px;
+        background-image: linear-gradient(#a8f7b5, #ecffef);
+    }
+
+    .home-body {
+        .moul{
+            font-family: 'Moul', cursive !important;
+        }
+        color: #4FA15C;
+    }
+}

@@ -1,0 +1,73 @@
+<div mat-dialog-title class="custom-dialog-title">
+    <span class="text-xl">កែប្រែការវាយតម្លៃ</span>
+</div>
+
+<mat-dialog-content class="custom-dialog-content" scrollbar>
+    <form [formGroup]="update" #updateNgForm="ngForm">
+        <div class="flex flex-col sm:flex-row gap-2">
+            <div class="w-full">
+                <div class="custom-form custom-select w-full">
+                    <mat-form-field appearance="outline" class="w-full mb-6">
+                        <mat-label>ប្រភេទនិយតករ</mat-label>
+                        <ng-container>
+                            <mat-select formControlName="regulator_id">
+                                <ng-container *ngIf="regulator_type?.length > 0">
+                                    <mat-option *ngFor="let row of regulator_type" [value]="row.id">
+                                        <span>{{ row.name }}</span>
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </ng-container>
+                        <mat-error class="min-h-6 mt-2.5 text-sm"
+                            *ngIf="update.get('regulator_id').hasError('required')">
+                            សូមជ្រើសរើសប្រភេទនិយតករ
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full mb-6">
+                        <mat-label>ប្រភេទការវាយតម្លៃ</mat-label>
+                        <ng-container>
+                            <mat-select formControlName="type_id">
+                                <ng-container *ngIf="products_type?.length > 0">
+                                    <mat-option *ngFor="let row of products_type" [value]="row.id">
+                                        <span>{{ row.name }}</span>
+                                    </mat-option>
+                                </ng-container>
+                            </mat-select>
+                        </ng-container>
+                        <mat-error class="min-h-6 mt-2.5 text-sm"
+                            *ngIf="update.get('type_id').hasError('required')">
+                            សូមជ្រើសរើសប្រភេទការវាយតម្លៃ
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full mb-6">
+                        <mat-label>បញ្ចេញមតិ</mat-label>
+                        <textarea  id="comment" matInput [formControlName]="'comment'" required></textarea>
+                        <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="update.get('comment').hasError('required')">
+                            សូមបញ្ចូលបញ្ចេញមតិ
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-full mb-6">
+                        <mat-label>បរិយាយ</mat-label>
+                        <textarea  id="description" matInput [formControlName]="'description'" required></textarea>
+                        <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="update.get('description').hasError('required')">
+                            សូមបញ្ចូលការបរិយាយ
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center" class="custom-dialog-actions">
+    <button class="min-w-8 max-w-8 rounded-md custom-button" mat-flat-button (click)="submit()"
+        [disabled]="update.invalid || saving">
+        <mat-icon *ngIf="!update.disabled" class="icon-size-6 text-white" svgIcon="mat_solid:save"></mat-icon>
+        <mat-progress-spinner *ngIf="update.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+    <button class="min-w-8 max-w-8 rounded-md" mat-flat-button [mat-dialog-close]="false" color="warn">
+        <mat-icon class="icon-size-6 text-white" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+    </button>
+</mat-dialog-actions>

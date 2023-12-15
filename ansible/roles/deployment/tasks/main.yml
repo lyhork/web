@@ -1,0 +1,24 @@
+- name: Build image
+  docker_image:
+    build:
+      path: ./../../web
+      dockerfile: Dockerfile
+    name: survey-web
+    tag: latest
+    push: false
+    force_source: yes
+    source: build
+  no_log: 
+
+- name: run docker image
+  docker_container:
+    name: survey-web
+    image: survey-web:latest
+    restart_policy: unless-stopped
+    recreate: yes
+    ports:
+      - "3903:80"
+    restart: true
+    networks:
+      - name: survey-network
+  no_log: false

@@ -1,0 +1,21 @@
+.image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.custom-position{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 6rem;
+}
+.custom-position p{
+    font-family: 'Battambang', cursive;
+    font-size: 2em;
+    color: #fff;
+    text-shadow: 1px 1px 5px rgba(255, 0, 0, 0.8);
+}
+
+.background-custom {
+    height: 100vh;
+}

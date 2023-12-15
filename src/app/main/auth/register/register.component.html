@@ -1,0 +1,122 @@
+<div class="flex items-start sm:items-center mx-auto">
+    <div class="w-full lg:w-2/12 lg:min-w-100">
+        <div class="max-w-120 lg:max-w-90 min-h-160 sm:min-h-200 m-auto p-6 sm:h-full rounded-3xl">
+
+            <div class="text-4xl flex justify-center">
+                បង្កើតគណនីរបស់អ្នក
+            </div>
+
+            <!-- Alert -->
+            <smooth-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'error'">
+                {{ alert.message }}
+            </smooth-alert>
+
+            <!-- Register in form -->
+            <form class="mt-8 custom-form" [formGroup]="RegisterForm" #RegisterNgForm="ngForm">
+
+                <!-- Name field -->
+                <mat-form-field appearance="outline" class="w-full mb-6">
+                    <mat-label>ឈ្មោះ</mat-label>
+                    <input id="name" matInput [formControlName]="'name'">
+                    <mat-icon class="mr-2" matSuffix svgIcon="mat_outline:smartphone"></mat-icon>
+                    <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="RegisterForm.get('name').hasError('required')">
+                        សូមបញ្ចូលឈ្មោះ
+                    </mat-error>
+                    <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="RegisterForm.get('name').hasError('minlength')">
+                        សូមបញ្ចូលឈ្មោះយ៉ាងតិចពីរអក្សរ
+                    </mat-error>
+                    <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="RegisterForm.get('name').hasError('maxlength')">
+                        សូមបញ្ចូលឈ្មោះយ៉ាងច្រើន៤០អក្សរ
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Email field -->
+                <mat-form-field appearance="outline" class="w-full mb-6">
+                    <mat-label>លេខទូរស័ព្ទ</mat-label>
+                    <input id="phone" matInput [formControlName]="'phone'">
+                    <mat-icon class="mr-2" matSuffix svgIcon="mat_outline:smartphone"></mat-icon>
+                    <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="RegisterForm.get('phone').hasError('required')">
+                        សូមបញ្ចូលលេខទូរស័ព្ទ
+                    </mat-error>
+                    <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="RegisterForm.get('phone').hasError('pattern')">
+                        សូមបញ្ចូលលេខទូរស័ព្ទឲ្យបានត្រឹមត្រូវ
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Password field -->
+                <mat-form-field appearance="outline" class="w-full mb-6">
+                    <mat-label>លេខសម្ងាត់</mat-label>
+                    <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
+                    <button mat-icon-button type="button" class="-top-0.5" (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'" matSuffix>
+                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                    </button>
+                    <mat-error class="min-h-6 mt-2.5 text-sm">
+                        សូមបញ្ចូលលេខសម្ងាត់
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Confirm Password field -->
+                <mat-form-field appearance="outline" class="w-full mb-6">
+                    <mat-label>បញ្ជាក់លេខសម្ងាត់</mat-label>
+                    <input id="password_confirmation" matInput type="password" [formControlName]="'password_confirmation'" #password_confirmationField>
+                    <button mat-icon-button type="button" class="-top-0.5" (click)="password_confirmationField.type === 'password' ? password_confirmationField.type = 'text' : password_confirmationField.type = 'password'" matSuffix>
+                        <mat-icon class="icon-size-5" *ngIf="password_confirmationField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                        <mat-icon class="icon-size-5" *ngIf="password_confirmationField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                    </button>
+                    <mat-error class="min-h-6 mt-2.5 text-sm">
+                        សូមបញ្ចូលបញ្ជាក់លេខសម្ងាត់
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Actions -->
+                <div class="inline-flex text-lg items-end justify-between w-full mt-1.5">
+                    <mat-checkbox [color]="'primary'" [formControlName]="'rememberMe'">
+                        ចងចាំខ្ញុំ
+                    </mat-checkbox>
+                </div>
+
+                <!-- Submit button -->
+                <button class="w-full mt-6 py-6 rounded-md custom-button" mat-flat-button [disabled]="RegisterForm.invalid  || saving" (click)="Login()">
+                    <span *ngIf="!RegisterForm.disabled" class="text-lg">
+                        បង្កើតគណនី
+                    </span>
+                    <mat-progress-spinner *ngIf="RegisterForm.disabled" [diameter]="24" [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </button>
+
+                <!-- Separator -->
+                <div class="flex items-center mt-8">
+                    <div class="flex-auto mt-px border-t"></div>
+                    <div class="mx-2 text-secondary">ឬ</div>
+                    <div class="flex-auto mt-px border-t"></div>
+                </div>
+
+                <!-- Title -->
+                <div class="flex flex-col items-center mt-0.5 font-medium">
+                    <div class="my-3">មានគណនីរួចហើយ ?</div>
+                    <a class="ml-1 text-primary-500 hover:underline" [routerLink]="['/auth/login']">ចូលប្រព័ន្ធ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="relative hidden lg:flex flex-auto w-10/12 h-full overflow-hidde">
+        <!-- Background -->
+        <img class="image" src="assets/images/backgrounds/dark-material-bg.jpg" alt="image">
+        <!-- Content -->
+        <div class="z-10 w-full custom-position">
+            <div class="flex min-w-28 max-w-28 mb-4">
+                <img src="assets/images/logo/pos-none-text.png" alt="image">
+            </div>
+            <div class="font-bold">
+                <p class="text-5xl">ប្រព័ន្ធគ្រប់គ្រង ការលក់តាម Mini Mart</p>
+            </div>
+        </div>
+    </div>
+</div>
+

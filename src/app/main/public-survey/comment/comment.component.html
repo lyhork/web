@@ -1,0 +1,18 @@
+<div class="w-full flex justify-center items-center bg-slate-50">
+    <div class="w-100 h-140 p-4">
+        <form [formGroup]="commentForm" #updateProNgForm="ngForm">
+            <div class="custom-textarea">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>មតិយោបល់</mat-label>
+                    <textarea id="content" matInput [formControlName]="'comment'" placeholder="Type your comment"></textarea>
+                </mat-form-field>
+            </div>
+        </form>
+        <div class="w-full flex justify-end mt-3">
+            <button class="min-w-18 max-w-18 rounded-md custom-button" mat-flat-button (click)="submit()" [disabled]="false">
+                <span *ngIf="!false">ផ្ញើ</span>
+                <mat-progress-spinner *ngIf="false" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+        </div>
+    </div>
+</div>

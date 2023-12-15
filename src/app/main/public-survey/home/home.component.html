@@ -1,0 +1,48 @@
+<div class="container-home-section">
+    <div class="home-header flex justify-between items-center p-3 lg:p-6 sticky top-0 z-99">
+        <div class="item-header">
+            <div class="image max-w-22 my-0 mx-auto mb-3">
+                <img src="assets/images/logo.png" alt="logo">
+            </div>
+            <p class="title">អាជ្ញាធរសេវាហិរញ្ញវត្ថុមិនមែនធនាគារ</p>
+            <p>NON-BANK FINANCIAL SERVICES AUTHORITY</p>
+        </div>
+        <div class="item-header hidden md:flex">ការិយាល័យច្រកចេញចូលតែមួយ</div>
+    </div>
+    <div class="home-body">
+        <div class="body-header text-base sm:text-lg md:text-3xl pt-4">
+            សូមជ្រើសរើសនិយ័តករឬអង្គភាពដែលបានផ្តល់សេវាជូនលោកអ្នក
+        </div>
+        <div class="items-body flex flex-col max-w-screen-xl mx-auto gap-3 p-3">
+            <ng-container *ngIf="isLoading">
+                <div class="min-w-26 w-full flex flex-col items-center overflow-hidden min-h-30 p-2 mt-6">
+                    <p class="text-xl mb-4">សូមរងចាំ! កំពុងទាញទិន្នន័យ</p>
+                    <div class="lds-spinner">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="w-full flex flex-row flex-wrap justify-center gap-3 mt-5" *ngIf="!isLoading">
+                <div class="item min-w-72 h-60 flex flex-col cursor-pointer" [routerLink]="'reg/'+box?.id" *ngFor="let box of data; index as i">
+                    <div class="main-box w-full min-h-34 text-center">
+                        <div class="min-w-45 max-w-44 min-h-45 max-h-45 mx-auto mb-1 mt-1">
+                            <img class="vert-move" [src]="box?.image ? fileUrl+box?.image : null" alt="logo">
+                        </div>
+                    </div>
+                    <div class="footer-box flex text-xl justify-center p-3.5 pt-1 w-full">{{box?.name}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

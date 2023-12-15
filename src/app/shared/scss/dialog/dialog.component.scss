@@ -1,0 +1,26 @@
+.mat-dialog-container {
+    border-radius: 10px !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+
+.custom-dialog-title{
+    margin: -24px -24px 12px !important;
+    --tw-bg-opacity: 1 !important;
+    background-color: rgb(22 163 74 / var(--tw-bg-opacity)) !important;
+    color: #fff !important;
+    padding: 12px 20px 8px !important;
+}
+
+.custom-dialog-content{
+    overflow: auto !important;
+    padding: 12px 24px !important;
+}
+
+.custom-dialog-actions{
+    margin: 6px -24px -24px!important;
+    display: flex !important;
+    padding: 6px 12px !important;
+    justify-content: flex-end !important;
+    box-shadow: 0 -1px #e2e8f0 !important;
+}

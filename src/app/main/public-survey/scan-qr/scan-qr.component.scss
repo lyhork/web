@@ -1,0 +1,37 @@
+.container-home-section {
+    width: 100dvw;
+    height: 100dvh;
+    overflow: auto;
+
+    .home-header {
+        width: 100%;
+        height: 180px;
+        background-image: linear-gradient(#a8f7b5, #ecffef);
+    }
+
+    .item-header:first-child {
+        color: #4FA15C;
+
+        .title {
+            font-family: 'Moul', cursive !important;
+        }
+
+        p {
+            padding-left: 2rem;
+        }
+
+    }
+
+    .item-header:last-child {
+        font-family: 'Moul', cursive !important;
+        color: #4FA15C;
+        font-size: 18px;
+    }
+
+    .home-body {
+        .moul{
+            font-family: 'Moul', cursive !important;
+        }
+        color: #4FA15C;
+    }
+}

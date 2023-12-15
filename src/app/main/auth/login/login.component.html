@@ -1,0 +1,92 @@
+<div class="flex items-start sm:items-center mx-auto min-w-full">
+    <div class="w-full md:w-2/12 md:min-w-100">
+        <div class="max-w-120 md:max-w-90 min-h-160 sm:min-h-200 m-auto p-6 sm:h-full rounded-3xl">
+
+            <div class="text-4xl flex justify-center">
+                ចូលគណនីរបស់អ្នក
+            </div>
+
+            <!-- Alert -->
+            <smooth-alert class="mt-8 -mb-4" *ngIf="showAlert" [appearance]="'outline'" [showIcon]="false" [type]="alert.type" [@shake]="alert.type === 'error'">
+                {{ alert.message }}
+            </smooth-alert>
+
+            <!-- Sign in form -->
+            <form class="mt-8 custom-form" [formGroup]="logInForm" #logInNgForm="ngForm">
+
+                <!-- Email field -->
+                <mat-form-field appearance="outline" class="w-full mb-6">
+                    <mat-label>លេខទូរស័ព្ទ</mat-label>
+                    <input id="username" matInput [formControlName]="'username'">
+                    <mat-icon class="mr-2" matSuffix svgIcon="mat_outline:smartphone"></mat-icon>
+                    <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="logInForm.get('username').hasError('required')">
+                        សូមបញ្ចូលលេខទូរស័ព្ទ
+                    </mat-error>
+                    <mat-error class="min-h-6 mt-2.5 text-sm" *ngIf="logInForm.get('username').hasError('pattern')">
+                        សូមបញ្ចូលលេខទូរស័ព្ទឲ្យបានត្រឹមត្រូវ
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Password field -->
+                <mat-form-field appearance="outline" class="w-full mb-6">
+                    <mat-label>លេខសម្ងាត់</mat-label>
+                    <input id="password" matInput type="password" [formControlName]="'password'" #passwordField>
+                    <button mat-icon-button type="button" class="-top-0.5" (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'" matSuffix>
+                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                        <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                    </button>
+                    <mat-error class="min-h-6 mt-2.5 text-sm">
+                        សូមបញ្ចូលលេខសម្ងាត់
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Actions -->
+                <div class="inline-flex text-lg items-end justify-between w-full mt-1.5">
+                    <mat-checkbox [color]="'primary'" [formControlName]="'rememberMe'">
+                        ចងចាំខ្ញុំ
+                    </mat-checkbox>
+                    <a class="text-red-600 text-lg hover:underline" [routerLink]="['/auth/forgot-password']">ភ្លេចពាក្យសម្ងាត់​ ?
+                    </a>
+                </div>
+
+                <!-- Submit button -->
+                <button class="w-full mt-6 py-6 rounded-md custom-button" mat-flat-button [disabled]="logInForm.invalid  || saving" (click)="Login()">
+                    <span *ngIf="!logInForm.disabled" class="text-lg">
+                        ចូលប្រព័ន្ធ
+                    </span>
+                    <mat-progress-spinner *ngIf="logInForm.disabled" [diameter]="24" [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </button>
+
+                <!-- Separator -->
+                <!-- <div class="flex items-center mt-8">
+                    <div class="flex-auto mt-px border-t"></div>
+                    <div class="mx-2 text-secondary">ឬ</div>
+                    <div class="flex-auto mt-px border-t"></div>
+                </div> -->
+
+                <!-- Title -->
+                <!-- <div class="flex flex-col items-center mt-0.5 font-medium">
+                    <div class="my-3">មិនទាន់មានគណនីទេ ?</div>
+                    <a class="ml-1 text-primary-500 hover:underline" [routerLink]="['/auth/register']">បង្កើតគណនី</a>
+                </div> -->
+            </form>
+        </div>
+    </div>
+
+    <div class="relative hidden md:flex flex-auto w-10/12 h-full overflow-hidde">
+        <!-- Background -->
+        <img class="image" src="assets/images/backgrounds/green-color-bg.png" alt="image">
+        <!-- Content -->
+        <div class="z-10 w-full custom-position">
+            <div class="flex min-w-128 max-w-128 mb-4">
+                <img src="assets/images/logo/fsa-logo.png" alt="image">
+            </div>
+            <div class="font-bold pt-4">
+                <p class="text-5xl moul">ប្រព័ន្ធគ្រប់គ្រងការផ្តល់មតិរបស់ FSA</p>
+            </div>
+        </div>
+    </div>
+</div>

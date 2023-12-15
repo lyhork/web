@@ -1,0 +1,24 @@
+.image{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+.custom-position{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 6rem;
+}
+.custom-position p{
+    font-size: 2em;
+    color: #4FA15C;
+}
+
+.background-custom {
+    height: 100dvh;
+}
+.moul{
+    font-family: 'Moul', cursive !important;
+}

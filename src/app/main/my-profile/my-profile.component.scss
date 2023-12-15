@@ -1,0 +1,29 @@
+.container-my-profiles-section {
+    width: 100%;
+    height: calc(100dvh - 3.75rem);
+    overflow: hidden;
+
+    .container-my-profiles-header {
+        width: 100%;
+        --tw-bg-opacity: 1 !important;
+        background-color: rgb(22 163 74 / var(--tw-bg-opacity)) !important;
+        min-height: 12rem;
+        max-height: 12rem;
+    }
+
+    .container-my-profiles-body {
+        width: 100%;
+        height: calc(100dvh - 3.75rem) !important;
+        overflow: hidden;
+
+        .container-my-profiles-content {
+            width: 100%;
+            height: calc(100dvh - 5.75rem);
+            overflow: hidden;
+        }
+    }
+}
+
+::ng-deep .container-my-profiles-content .mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label {
+    width: 50%;
+}

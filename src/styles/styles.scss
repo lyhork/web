@@ -1,0 +1,49 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Helpers's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Hanuman', sans-serif , cursive !important;
+    font-weight: 400;
+    font-size: 15px; //do not change this
+}
+body {
+    touch-action: manipulation !important;
+}
+
+// switch
+.switch-medium {
+    height: 20px !important;
+    min-width: 44px !important;
+}
+.switch.checked{
+    border: 1px solid rgb(74 222 128 / var(--tw-bg-opacity)) !important;
+}
+
+.checked {
+    --tw-bg-opacity: 1 !important;
+    background-color: rgb(74 222 128 / var(--tw-bg-opacity)) !important;
+}
+
+.switch-medium small {
+    right: calc(100% - 20px) !important;
+}
+
+.switch small {
+    width: 20px !important;
+    height: 20px !important;
+    top: 0 !important;
+}
+
+.switch.checked small {
+    background-color: #FFF !important;
+    right: 0 !important;
+}
+

@@ -1,0 +1,127 @@
+.container-dashboard-section{
+    width: 100%;
+    height: calc(100dvh - 3.75rem);
+}
+.title-module{
+    font-size: 18px !important;
+    line-height: 22px !important;
+}
+.des-module{
+    color: #717171 !important;
+    letter-spacing: .5px;
+    font-size: .90rem;
+}
+.card-module{
+    box-shadow: 0 5px 15px rgba(57,98,254,.02), 0 3px 6px rgba(117,108,254,.12) !important;
+}
+.icon-module{
+    color: #00008b !important;
+    font-size: 35px !important;
+}
+section{
+    cursor: pointer !important; 
+}
+table {
+    width: 100%;
+  }
+
+  .container-listing-regulator-section {
+    width: 100%;
+    height: calc(100dvh - 3.75rem);
+    overflow: hidden;
+
+    .container-listing-regulator-header {
+        width: 100%;
+        min-height: 3.75rem;
+        max-height: 3.75rem;
+    }
+
+    .container-listing-regulator-body {
+        width: 100%;
+        max-height: calc(100dvh - 7.5rem);
+        overflow: hidden;
+
+        .container-listing-regulator-content {
+            width: 100%;
+            max-height: calc(100dvh - 8.5rem);
+            overflow: hidden;
+
+            .container-listing-regulator-data {
+                width: 100%;
+                max-height: calc(100dvh - 8.5rem);
+                overflow: auto;
+                border-radius: 0.432rem;
+            }
+        }
+    }
+}
+
+
+table {
+    width: 100%;
+}
+
+
+.container-listing-regulator-data .mat-cell {
+    padding: 3px 6px !important;
+    color: rgb(71 85 105) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+tr.mat-row:last-child .mat-cell{
+    border: none !important;
+}
+
+.container-listing-regulator-data .mat-header-cell {
+    font-size: 1rem !important;
+    padding: 0 !important;
+    color: rgb(255 255 255) !important;
+    z-index: 100 !important;
+    background-color: #0312c4;
+}
+
+.container-listing-regulator-data .mat-column-ID {
+    min-width: 70px;
+    width: 70px;
+    max-width: 70px;
+    text-align: center;
+}
+
+
+.container-listing-regulator-data .mat-column-name {
+    min-width: 18rem;
+    text-align: left;
+    padding: 3px 2rem !important;
+}
+
+.container-listing-regulator-data .mat-column-n-of-user {
+    min-width: 6rem !important;
+}
+
+.container-listing-regulator-data .mat-column-active {
+    flex: none;
+    width: 2rem;
+    margin-right: -2px !important;
+}
+
+
+::ng-deep .custom-botton-flat .mat-flat-button {
+    color: #fff !important;
+}
+
+
+.flex-custom {
+    display: flex !important;
+}
+
+::placeholder {
+    color: rgb(100 116 139) !important;
+}
+
+::-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgb(100 116 139) !important;
+}
+
+//end - 12/12/2023

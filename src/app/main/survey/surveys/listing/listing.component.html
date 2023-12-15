@@ -1,0 +1,170 @@
+<div class="container-listing-products-section">
+    <div
+        class="container-listing-products-header flex gap-2 justify-between items-center py-2 px-5 shadow bg-white">
+        <div class="flex items-center whitespace-nowrap">
+            <mat-icon class="text-gray-600 icon-size-4.5" matPrefix [svgIcon]="'heroicons_solid:home'"></mat-icon>
+            <div class="flex items-center ml-1 whitespace-nowrap">
+                <mat-icon class="icon-size-4.5 text-gray-600" [svgIcon]="'heroicons_solid:chevron-right'">
+                </mat-icon>
+                <span class="ml-1 text-gray-600" *transloco="let t">{{t('Survey')}}</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="custom-select-header hidden md:flex">
+                <mat-form-field appearance="outline" class="min-w-40 max-w-40">
+                    <mat-select [(ngModel)]="regulator_id" placeholder="ប្រភេទផលិតផល">
+                        <mat-option [value]="0" (click)="listing()">
+                            <span *transloco="let t">{{t('Regulator')}}</span>
+                        </mat-option>
+                        <ng-container *ngIf="regulator_type?.length > 0">
+                            <mat-option *ngFor="let row of regulator_type" [value]="row?.id" (click)="listing()">
+                                <span>{{ row?.name }}</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="custom-select-header hidden md:flex">
+                <mat-form-field appearance="outline" class="min-w-40 max-w-40">
+                    <mat-select [(ngModel)]="type_id" placeholder="ប្រភេទផលិតផល">
+                        <mat-option [value]="0" (click)="listing()">
+                            <span *transloco="let t">{{t('Survey')}}</span>
+                        </mat-option>
+                        <ng-container *ngIf="products_type?.length > 0">
+                            <mat-option *ngFor="let row of products_type" [value]="row?.id" (click)="listing()">
+                                <span>{{ row?.name }}</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <mat-form-field class="mr-8">
+                <mat-label> From </mat-label>
+                <input (click)="from_picker.open()" matInput [(ngModel)]="from" [matDatepicker]="from_picker" style = " cursor:pointer " [readonly] = " true ">
+                <mat-datepicker-toggle matSuffix [for]="from_picker"></mat-datepicker-toggle>
+                <mat-datepicker #from_picker touchUi></mat-datepicker>
+            </mat-form-field>
+    
+            <mat-form-field >
+                <mat-label> To </mat-label>
+                <input (click)="to_picker.open()" [(ngModel)]="to" matInput [matDatepicker]="to_picker" style = " cursor:pointer " [readonly] = " true " [min]="from">
+                <mat-datepicker-toggle matSuffix [for]="to_picker"></mat-datepicker-toggle>
+                <mat-datepicker #to_picker touchUi></mat-datepicker>
+            </mat-form-field>
+            
+            <div class="custom-botton-flat hidden sm:flex">
+                <button class="min-w-8 max-w-8 rounded-md bg-green-600" mat-flat-button (click)=" listing()">
+                    <mat-icon class="icon-size-7" svgIcon="mat_outline:search"></mat-icon>
+                </button>
+            </div>
+            <div class="custom-botton-flat hidden sm:flex">
+                <button class="min-w-8 max-w-8 rounded-md bg-green-600" mat-flat-button (click)=" print()">
+                    <mat-icon class="icon-size-7" svgIcon="mat_outline:print"></mat-icon>
+                </button>
+            </div>
+            <!-- <div class="custom-botton-flat">
+                <button class="min-w-8 max-w-8 rounded-md bg-green-600" mat-flat-button (click)="create()">
+                    <mat-icon class="icon-size-8" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                </button>
+            </div> -->
+        </div>
+    </div>
+    <div class="container-listing-products-body p-2">
+        
+        <ng-container *ngIf="isLoading">
+            <div class="min-w-26 w-full flex flex-col items-center overflow-hidden min-h-30 p-2 mt-6">
+                <p class="text-xl mb-4">សូមរងចាំ! កំពុងទាញទិន្នន័យ</p>
+                <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container>
+            <div *ngIf=" data?.length == 0 && !isLoading " class="flex flex-col justify-center items-center mb-4">
+                <mat-icon class="icon-size-24" svgIcon="toc"></mat-icon>
+                <span class="text-2xl"><span>គ្មានទិន្នន័យ</span></span>
+            </div>
+        </ng-container>
+        <div class="container-listing-products-content border rounded-lg hidden flex-col"
+            [ngClass]="{'flex-custom': data?.length > 0  && !isLoading }">
+            <div class="container-listing-products-data" scrollbar>
+
+                <table mat-table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="no" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('no')}}</th>
+                        <td mat-cell *matCellDef="let i=index"> {{i+1}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="regulator" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('Regulator')}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row?.regulator?.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="survey" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('Survey')}}</th>
+                        <td mat-cell *matCellDef="let element"> 
+                            {{element?.type?.name}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="comment" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef>{{t('comment')}}</th>
+                        <td mat-cell *matCellDef="let element"> 
+                            {{element?.comment}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef>{{t('date')}}</th>
+                        <td mat-cell *matCellDef="let data" class="bg-white z-0 -right-1">
+                            {{data?.created_at | date: 'dd-MMM-yyy hh:mm a'}}
+                        </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="action" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="z-999"></th>
+                        <td mat-cell *matCellDef="let element" class="bg-white z-0 -right-1">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu">
+                                <mat-icon class="icon-size-6" svgIcon="mat_outline:more_vert"></mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="update(element)">
+                                    <mat-icon class="icon-size-5 text-blue-500" svgIcon="mat_outline:edit"></mat-icon>
+                                    <span class="text-lg text-blue-500">កែប្រែ</span>
+                                </button>
+                                <button mat-menu-item (click)="delete(element?.id)">
+                                    <mat-icon class="icon-size-5 text-red-400" svgIcon="mat_solid:delete_outline"></mat-icon>
+                                    <span class="text-lg text-red-400">លុប</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container> -->
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
+                        class="bg-green-600 -pr-2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <div class="container-listing-products-paginator min-h-11 max-h-11"
+                [ngClass]="{'flex-custom': data?.length > 0  && !isLoading }">
+                <mat-paginator
+                    class="w-full bg-gray-50 dark:bg-black dark:bg-opacity-5 flex items-center justify-end overflow-hidden"
+                    [pageSizeOptions]="[10, 20, 30]" [showFirstLastButtons]="true" [length]="total" [pageSize]="limit"
+                    (page)="onPageChanged($event)">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+<div class="container-listing-user-section">
+    <div
+        class="container-listing-user-header flex gap-2 justify-between items-center py-2 px-5 shadow bg-white">
+        <div class="flex flex-1 items-center font-medium">
+            <div class="flex items-center whitespace-nowrap">
+                <mat-icon class="text-gray-600 icon-size-4.5" matPrefix [svgIcon]="'heroicons_solid:home'"></mat-icon>
+            </div>
+            <div class="flex items-center ml-1 whitespace-nowrap">
+                <mat-icon class="icon-size-4.5 text-gray-600" [svgIcon]="'heroicons_solid:chevron-right'">
+                </mat-icon>
+                <span class="ml-1 text-gray-600" *transloco="let t">{{t('Users')}}</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="custom-select-header hidden sm:flex">
+                <mat-form-field appearance="outline" class="min-w-40 max-w-40">
+                    <input matInput [(ngModel)]="key" placeholder="ឈ្មោះ ឬលេខទូស័ព្ទ">
+                </mat-form-field>
+            </div>
+            <div class="custom-botton-flat hidden sm:flex">
+                <button class="min-w-8 max-w-8 rounded-md bg-green-600" mat-flat-button (click)="listing()">
+                    <mat-icon class="icon-size-7" svgIcon="mat_solid:search"></mat-icon>
+                </button>
+            </div>
+            <div class="custom-botton-flat">
+                <button class="min-w-8 max-w-8 rounded-md bg-green-600" mat-flat-button (click)="create()">
+                    <mat-icon class="icon-size-8" [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container-listing-user-body p-2">
+        <ng-container *ngIf="isSearching">
+            <div class="min-w-26 w-full flex flex-col items-center overflow-hidden min-h-30 p-2 mt-6">
+                <p class="text-xl mb-4">សូមរងចាំ! កំពុងទាញទិន្នន័យ</p>
+                <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container>
+            <div *ngIf=" data?.length == 0 && !isSearching " class="flex flex-col justify-center items-center mb-4">
+                <mat-icon class="icon-size-24" svgIcon="toc"></mat-icon>
+                <span class="text-2xl"><span>គ្មានទិន្នន័យ</span></span>
+            </div>
+        </ng-container>
+        <div class="container-listing-user-content border rounded-lg hidden flex-col"
+            [ngClass]="{'flex-custom': data?.length > 0  && !isSearching }">
+            <div class="container-listing-user-data" scrollbar>
+
+                <table mat-table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="no" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('no')}} </th>
+                        <td mat-cell *matCellDef="let i=index"> {{i+1}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name" class="" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('name')}} </th>
+                        <td mat-cell *matCellDef="let element"> {{element?.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('type')}} </th>
+                        <td mat-cell *matCellDef="let element"> {{element?.type?.kh_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="phone" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('phone_number')}} </th>
+                        <td mat-cell *matCellDef="let element"> {{element?.phone}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('email')}} </th>
+                        <td mat-cell *matCellDef="let element"> {{element?.email}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_update" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('updated_at')}} </th>
+                        <td mat-cell *matCellDef="let element"> {{element?.created_at | date: 'dd-MMM-yyy hh:mm a'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="image" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef> {{t('image')}} </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <img [src]="element?.avatar ? fileUrl+element?.avatar : null" style="width:45px; height: 45px;" alt="image"> </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status" *transloco="let t">
+                        <th mat-header-cell *matHeaderCellDef>{{t('status')}}</th>
+                        <td mat-cell *matCellDef="let element">
+                            <ui-switch [checked]="element?.is_active == 1" (change)="onChange($event, element.id)">
+                            </ui-switch>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="z-999"></th>
+                        <td mat-cell *matCellDef="let element" class="bg-white z-0 -right-1">
+                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu">
+                                <mat-icon class="icon-size-6" svgIcon="mat_outline:more_vert"></mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="changePassword(element)">
+                                    <mat-icon class="icon-size-5" svgIcon="heroicons_outline:key"></mat-icon>
+                                    <span class="text-lg text-gray-500" *transloco="let t">{{t('change_password')}}</span>
+                                </button>
+                                <button mat-menu-item (click)="update(element)">
+                                    <mat-icon class="icon-size-5 text-blue-500" svgIcon="heroicons_outline:eye"></mat-icon>
+                                    <span class="text-lg text-blue-500" *transloco="let t">{{t('update_data')}}</span>
+                                </button>
+                                <button mat-menu-item (click)="delete(element?.id)">
+                                    <mat-icon class="icon-size-5 text-red-400" svgIcon="mat_solid:delete_outline"></mat-icon>
+                                    <span class="text-lg text-red-400" *transloco="let t">{{t('delete')}}</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
+                        class="bg-green-600 -pr-2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <div class="container-listing-user-paginator min-h-11 max-h-11"
+                [ngClass]="{'flex-custom': data?.length > 0  && !isSearching }">
+                <mat-paginator
+                    class="w-full bg-gray-50 dark:bg-black dark:bg-opacity-5 flex items-center justify-end overflow-hidden"
+                    [pageSizeOptions]="[10, 20, 30]" [showFirstLastButtons]="true" [length]="total" [pageSize]="limit"
+                    (page)="onPageChanged($event)">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
